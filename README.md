@@ -207,6 +207,44 @@ cd ../frontend && npm install && npm run build
 
 
 ---
+
+## Déploiement sur Render
+
+Ce projet est maintenant prêt pour un déploiement Render avec deux services :
+- backend Django dans le dossier `backend`
+- frontend Vue.js dans le dossier `frontend`
+
+### 1. Backend Render
+- `Root directory` : `backend`
+- `Build command` : `pip install -r requirements.txt`
+- `Start command` : `gunicorn config.wsgi:application --bind 0.0.0.0:$PORT`
+- `Environment` : Python
+
+### 2. Frontend Render
+- `Root directory` : `frontend`
+- `Build command` : `npm install && npm run build`
+- `Publish directory` : `dist`
+- `Environment` : Static Site
+
+### 3. Variables d'environnement Render
+Backend :
+- `SECRET_KEY`
+- `DEBUG=False`
+- `ALLOWED_HOSTS=<backend>.onrender.com`
+- `DATABASE_URL` ou (`DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`)
+- `CORS_ALLOWED_ORIGINS=https://<frontend>.onrender.com`
+
+Frontend :
+- `VITE_API_URL=https://<backend>.onrender.com`
+
+### 4. Commandes après déploiement
+- `python manage.py migrate --settings=config.settings.production`
+- `python manage.py collectstatic --no-input --settings=config.settings.production`
+- `python manage.py createsuperuser --settings=config.settings.production`
+
+> Attention : les fichiers uploadés dans `MEDIA_ROOT` ne sont pas persistants sur Render. Pour un usage réel, pense à connecter un stockage externe (S3, Cloudinary, etc.).
+
+---
 Demarer les serveurs
 backend python manage.py runserver --settings=config.settings.development
 Frontend npm run dev

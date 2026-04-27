@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: plateforme-backend
+    env: python
+    branch: main
+    rootDirectory: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+
+  - type: static_site
+    name: plateforme-frontend
+    env: static
+    branch: main
+    rootDirectory: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
