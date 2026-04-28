@@ -222,7 +222,7 @@ Ce projet est maintenant prêt pour un déploiement Render avec deux services :
 
 ### 2. Frontend Render
 - `Root directory` : `frontend`
-- `Build command` : `npm install && npm run build`
+- `Build command` : `npm install --include=dev && npm run build`
 - `Publish directory` : `dist`
 - `Environment` : Static Site
 

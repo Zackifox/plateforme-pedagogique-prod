@@ -12,5 +12,5 @@ services:
     env: static
     branch: main
     rootDirectory: frontend
-    buildCommand: npm install && npm run build
+    buildCommand: npm install --include=dev && npm run build
     publishPath: dist
