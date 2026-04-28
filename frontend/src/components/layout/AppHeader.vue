@@ -4,7 +4,7 @@
 
       <!-- Logo -->
       <router-link to="/" class="flex items-center gap-2 font-bold text-blue-700 text-lg shrink-0">
-        <img src="C:\Users\DAVID\Downloads\plateforme-pedagogique\logo.jpeg" alt="Logo" class="w-7 h-7 object-contain" />
+        <img src="/logo.jpeg" alt="Logo" class="w-7 h-7 object-contain" />
         <span class="hidden sm:inline">UET-UCO-UUT Plateforme Pédagogique</span>
       </router-link>
 
