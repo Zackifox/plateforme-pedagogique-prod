@@ -103,22 +103,3 @@ SIMPLE_JWT = {
 
 # Taille maximale des fichiers PDF : 20 Mo
 PDF_MAX_SIZE = 20 * 1024 * 1024
-
-# Cloudinary
-import cloudinary
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME', default=''),
-    'API_KEY': config('CLOUDINARY_API_KEY', default=''),
-    'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
-}
-
-cloudinary.config(
-    cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
-    api_key=CLOUDINARY_STORAGE['API_KEY'],
-    api_secret=CLOUDINARY_STORAGE['API_SECRET'],
-)
-
-# Stockage Cloudinary en production
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
-INSTALLED_APPS += ['cloudinary', 'cloudinary_storage']
