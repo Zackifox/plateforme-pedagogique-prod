@@ -1,10 +1,11 @@
-bind = "127.0.0.1:8000"
-workers = 3
+bind = "0.0.0.0:8000"
+workers = 2
 worker_class = "sync"
 timeout = 120
 keepalive = 5
 max_requests = 1000
 max_requests_jitter = 100
-accesslog = "/var/log/gunicorn/access.log"
-errorlog = "/var/log/gunicorn/error.log"
+# Logs vers stdout/stderr (compatible Render)
+accesslog = "-"
+errorlog = "-"
 loglevel = "info"
