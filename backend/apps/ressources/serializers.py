@@ -18,10 +18,23 @@ class RessourceListSerializer(serializers.ModelSerializer):
         ]
 
     def get_fichier_url(self, obj):
-        request = self.context.get('request')
-        if obj.fichier and request:
-            return request.build_absolute_uri(obj.fichier.url)
-        return None
+        if not obj.fichier:
+            return None
+        url = obj.fichier.url
+        # Forcer le type fl_attachment pour le téléchargement correct
+        if 'cloudinary.com' in url:
+            # Remplacer /raw/upload/ par /raw/upload/fl_attachment/
+            url = url.replace('/raw/upload/', '/raw/upload/fl_attachment/')
+            return url
+    fichier_url = serializers.SerializerMethodField()
+    apercu_url = serializers.SerializerMethodField()
+
+    def get_apercu_url(self, obj):
+        if not obj.fichier:
+            return None
+        url = obj.fichier.url
+        # URL simple sans fl_attachment pour l'aperçu inline
+        return url
 
 
 class RessourceDetailSerializer(RessourceListSerializer):
@@ -37,6 +50,7 @@ class RessourceCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ressource
         fields = [
-            'id', 'titre', 'type_ressource', 'matiere',
-            'annee', 'description', 'fichier',
+            'id', 'titre', 'type_ressource', 'type_label',
+            'matiere', 'matiere_nom', 'annee', 'description',
+            'nb_telechargements', 'fichier_url', 'apercu_url', 'created_at',
         ]

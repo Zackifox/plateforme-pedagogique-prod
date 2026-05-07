@@ -15,8 +15,10 @@
 
     <div class="flex gap-2 mt-auto">
       <a
-        :href="previewUrl"
+        v-if="ressource.apercu_url"
+        :href="ressource.apercu_url"
         target="_blank"
+        rel="noopener noreferrer"
         class="btn-secondary text-xs py-1.5 flex-1 justify-center"
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -26,9 +28,11 @@
         Aperçu
       </a>
       <a
-        :href="downloadUrl"
+        v-if="ressource.fichier_url"
+        :href="ressource.fichier_url"
+        target="_blank"
+        rel="noopener noreferrer"
         class="btn-primary text-xs py-1.5 flex-1 justify-center"
-        download
       >
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -41,7 +45,6 @@
 
 <script setup>
 import { computed } from 'vue'
-import { ressourcesApi } from '@/api/ressources'
 
 const props = defineProps({
   ressource: { type: Object, required: true },
@@ -55,6 +58,4 @@ const badgeMap = {
   autre: 'badge-autre',
 }
 const badgeClass = computed(() => badgeMap[props.ressource.type_ressource] || 'badge-autre')
-const downloadUrl = computed(() => ressourcesApi.getDownloadUrl(props.ressource.id))
-const previewUrl = computed(() => ressourcesApi.getPreviewUrl(props.ressource.id))
 </script>
