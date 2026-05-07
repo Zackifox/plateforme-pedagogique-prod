@@ -33,7 +33,16 @@ class RessourceViewSet(viewsets.ModelViewSet):
     search_fields = ['titre', 'description', 'matiere__nom']
     ordering_fields = ['created_at', 'titre', 'nb_telechargements', 'annee']
     ordering = ['-created_at']
-
+    
+    def create(self, request, *args, **kwargs):   
+        try:
+            return super().create(request, *args, **kwargs)
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"ERREUR UPLOAD: {str(e)}")
+            logger.error(traceback.format_exc())
+            raise
     def get_queryset(self):
         return Ressource.objects.select_related(
             'matiere__niveau__filiere__institut'
