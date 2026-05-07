@@ -61,20 +61,13 @@ class RessourceViewSet(viewsets.ModelViewSet):
         ressource.nb_telechargements += 1
         ressource.save(update_fields=['nb_telechargements'])
 
-        response = FileResponse(
-            ressource.fichier.open('rb'),
-            content_type='application/pdf',
-            as_attachment=True,
-            filename=ressource.fichier.name.split('/')[-1],
-        )
-        return response
+        # Rediriger vers l'URL Cloudinary directement
+        from django.http import HttpResponseRedirect
+        return HttpResponseRedirect(ressource.fichier.url)
 
     @action(detail=True, methods=['get'], url_path='apercu')
     def apercu(self, request, pk=None):
         ressource = self.get_object()
-        response = FileResponse(
-            ressource.fichier.open('rb'),
-            content_type='application/pdf',
-        )
-        response['Content-Disposition'] = f'inline; filename="{ressource.fichier.name.split("/")[-1]}"'
-        return response
+        # Rediriger vers l'URL Cloudinary directement
+        from django.http import HttpResponseRedirect
+        return HttpResponseRedirect(ressource.fichier.url)
