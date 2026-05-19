@@ -16,7 +16,7 @@
     </div>
 
     <div class="flex gap-2 mt-auto">
-      
+      <a
         :href="apercuUrl"
         target="_blank"
         rel="noopener noreferrer"
@@ -24,7 +24,7 @@
       >
         Aperçu
       </a>
-      
+      <a
         :href="downloadUrl"
         target="_blank"
         rel="noopener noreferrer"
