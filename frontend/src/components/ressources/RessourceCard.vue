@@ -3,7 +3,9 @@
     <div class="flex items-start justify-between gap-2">
       <div class="flex-1 min-w-0">
         <h3 class="font-semibold text-gray-900 truncate">{{ ressource.titre }}</h3>
-        <p v-if="ressource.description" class="text-sm text-gray-500 mt-0.5 line-clamp-2">{{ ressource.description }}</p>
+        <p v-if="ressource.description" class="text-sm text-gray-500 mt-0.5 line-clamp-2">
+          {{ ressource.description }}
+        </p>
       </div>
       <span :class="badgeClass">{{ ressource.type_label }}</span>
     </div>
@@ -14,9 +16,8 @@
     </div>
 
     <div class="flex gap-2 mt-auto">
-      <a
-        v-if="ressource.apercu_url"
-        :href="ressource.apercu_url"
+      
+        :href="apercuUrl"
         target="_blank"
         rel="noopener noreferrer"
         class="btn-secondary text-xs py-1.5 flex-1 justify-center"
@@ -27,9 +28,8 @@
         </svg>
         Aperçu
       </a>
-      <a
-        v-if="ressource.fichier_url"
-        :href="ressource.fichier_url"
+      
+        :href="downloadUrl"
         target="_blank"
         rel="noopener noreferrer"
         class="btn-primary text-xs py-1.5 flex-1 justify-center"
@@ -50,6 +50,8 @@ const props = defineProps({
   ressource: { type: Object, required: true },
 })
 
+const API_URL = import.meta.env.VITE_API_URL || ''
+
 const badgeMap = {
   cours: 'badge-cours',
   sujet: 'badge-sujet',
@@ -58,4 +60,6 @@ const badgeMap = {
   autre: 'badge-autre',
 }
 const badgeClass = computed(() => badgeMap[props.ressource.type_ressource] || 'badge-autre')
+const downloadUrl = computed(() => `${API_URL}/api/ressources/${props.ressource.id}/telecharger/`)
+const apercuUrl = computed(() => `${API_URL}/api/ressources/${props.ressource.id}/apercu/`)
 </script>

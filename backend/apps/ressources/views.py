@@ -57,17 +57,45 @@ class RessourceViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'], url_path='telecharger')
     def telecharger(self, request, pk=None):
+        import requests as req
         ressource = self.get_object()
         ressource.nb_telechargements += 1
         ressource.save(update_fields=['nb_telechargements'])
 
-        # Rediriger vers l'URL Cloudinary directement
-        from django.http import HttpResponseRedirect
-        return HttpResponseRedirect(ressource.fichier.url)
+        try:
+            url = ressource.fichier.url
+            response = req.get(url, timeout=30)
+            from django.http import HttpResponse
+            filename = ressource.fichier.name.split('/')[-1]
+            http_response = HttpResponse(
+                response.content,
+                content_type='application/pdf'
+            )
+            http_response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            http_response['Access-Control-Allow-Origin'] = '*'
+            return http_response
+        except Exception as e:
+            from django.http import HttpResponseRedirect
+            return HttpResponseRedirect(ressource.fichier.url)
+
 
     @action(detail=True, methods=['get'], url_path='apercu')
     def apercu(self, request, pk=None):
+        import requests as req
         ressource = self.get_object()
-        # Rediriger vers l'URL Cloudinary directement
-        from django.http import HttpResponseRedirect
-        return HttpResponseRedirect(ressource.fichier.url)
+
+        try:
+            url = ressource.fichier.url
+            response = req.get(url, timeout=30)
+            from django.http import HttpResponse
+            filename = ressource.fichier.name.split('/')[-1]
+            http_response = HttpResponse(
+                response.content,
+                content_type='application/pdf'
+            )
+            http_response['Content-Disposition'] = f'inline; filename="{filename}"'
+            http_response['Access-Control-Allow-Origin'] = '*'
+            return http_response
+        except Exception as e:
+            from django.http import HttpResponseRedirect
+            return HttpResponseRedirect(ressource.fichier.url)
