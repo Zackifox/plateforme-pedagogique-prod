@@ -16,27 +16,20 @@
     </div>
 
     <div class="flex gap-2 mt-auto">
-      <a
+      
         :href="apercuUrl"
         target="_blank"
         rel="noopener noreferrer"
         class="btn-secondary text-xs py-1.5 flex-1 justify-center"
       >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-        </svg>
         Aperçu
       </a>
-      <a
+      
         :href="downloadUrl"
         target="_blank"
         rel="noopener noreferrer"
         class="btn-primary text-xs py-1.5 flex-1 justify-center"
       >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
         Télécharger
       </a>
     </div>
@@ -59,6 +52,7 @@ const badgeMap = {
   tp: 'badge-tp',
   autre: 'badge-autre',
 }
+
 const badgeClass = computed(() => badgeMap[props.ressource.type_ressource] || 'badge-autre')
 const downloadUrl = computed(() => `${API_URL}/api/ressources/${props.ressource.id}/telecharger/`)
 const apercuUrl = computed(() => `${API_URL}/api/ressources/${props.ressource.id}/apercu/`)
